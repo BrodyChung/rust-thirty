@@ -1,6 +1,7 @@
 // ref: https://dev.to/sammyshear/30-days-of-rust-day-two-25j8
 use evalexpr::*;
 use std::io;
+use std::fs::File;
 
 // There's no function overloading in Rust. 
 // rust函数没有重载，只能取不同的名字
@@ -34,5 +35,11 @@ fn read() -> io::Result<()> {
     let mut buffer = String::new();
     let stdin = io::stdin();
     stdin.read_line(&mut buffer)?; // return Error if
+    Ok(())
+}
+
+
+fn open() -> Result<(), io::Error> {
+    let f = File::open("bar.txt")?;
     Ok(())
 }
