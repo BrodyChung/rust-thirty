@@ -36,6 +36,7 @@ Content-Type: text/html
 <!DOCTYPE html>… (here come the 29769 bytes of the requested web page)
  */
  // get the 1st line of request.
+ // buf_reader.lines().next() - Option<Result<std::string::String, std::io::Error>>
 fn handle_connection_v11(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
     let request_line = buf_reader.lines().next().unwrap().unwrap();

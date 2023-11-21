@@ -12,10 +12,12 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 fn main() {
     println!("Hello, world!");
 
     // day6::guess_number();
-    day8::http_server_v1();
+    // day8::http_server_v1();
+    day9::http_server();
 }
