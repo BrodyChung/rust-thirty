@@ -9,3 +9,9 @@ edition = "2021"
 lazy_static = "1.4.0"
 rand = "*" # * -> the latest
 evalexpr = "*"  # https://docs.rs/evalexpr/latest/evalexpr/
+futures = "0.3"
+
+# async is a lib
+[dependencies.async-std]
+version = "1.6"
+features = ["attributes"]

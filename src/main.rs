@@ -14,11 +14,15 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
+mod day11;
+mod day12;
 
-fn main() {
+#[async_std::main]
+async fn main() {
     println!("Hello, world!");
 
     // day6::guess_number();
     // day8::http_server_v1();
-    day9::http_server();
+    // day9::http_server();
+    day12::http_async_server().await;
 }
