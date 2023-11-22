@@ -11,7 +11,7 @@ static FOO: Foo = Foo(5);
 static mut FOO_MUT: Foo = Foo(3);
 
 static mut STATIC_STR: String = String::new();
-// 不能以这种方式来初始化，可以使用lazy_static
+// 不能以这种方式来初始化，可以使用lazy_static - static不是动态的
 // static mut STATIC_STR_FAILED: String = new_str("nothing");
 lazy_static! {
     static ref LAZY_STATIC_STR: String = new_str("something");

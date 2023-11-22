@@ -5,7 +5,7 @@ use rand::thread_rng;
 
 // shuffle: using Fisher-Yates algorithm - O(n)
 // irs is another shuffle algorithm
-// shuffle这个方法是修改str，而不是返回值因此无法使用chain
+// shuffle这个方法是修改vec，而不是返回值因此无法使用chain
 // 最后的collect::<String>() 直接从Vec<char>的iter到String - collect的特殊用法
 // 一般的collect都是从iter到Vec
 pub fn shuffle(str: &str) -> String {
@@ -15,6 +15,8 @@ pub fn shuffle(str: &str) -> String {
     return string_to_shuffle.iter().collect::<String>()
 }
 
+// "cargo test -- --nocapture" 会输出print到标准输出
+// "cargo test test_shuffle" 仅仅执行某个测试
 #[cfg(test)]
 mod tests {
     use super::*;

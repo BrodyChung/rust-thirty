@@ -11,7 +11,7 @@ use preloaded::MORSE_CODE;
 pub fn decode_morse(encoded: &str) -> String {
     let refined: Vec<&str> = encoded
     .split(" ")
-    .map(|s| s)
+    //.map(|s| s)
     .collect();
 
     let mut decoded_string: Vec<&str> = vec![];
