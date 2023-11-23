@@ -1,7 +1,7 @@
 // ref: https://rust-lang.github.io/async-book/09_example/01_running_async_code.html
 extern crate async_std;
 
-// std和async_std都有TcpListener/TcpStream
+// std & async_std have both TcpListener/TcpStream, but they are not the same.
 // 不同的是async_std的版本需要调用await，函数才会执行, 也就是说两者的签名不太一样
 
 use std::{
@@ -59,4 +59,54 @@ async fn handle_connection(mut stream: TcpStream) {
     let response = format!("{status_line}{contents}");
     stream.write(response.as_bytes()).await;
     stream.flush().await;
+}
+
+// ref: https://rust-lang.github.io/async-book/01_getting_started/04_async_await_primer.html
+// block_on: turn async fn to regular fn, and it blocks
+// use async+await to keep it unblocking - 两者并行执行
+use futures::executor::block_on;
+
+struct Song {}
+async fn learn_song() -> Song { return Song {}; }
+async fn sing_song(song: Song) { /* ... */ }
+async fn dance() { /* ... */ }
+
+fn test_block_on() {
+    let song = block_on(learn_song());
+    block_on(sing_song(song));
+    block_on(dance());
+}
+
+// learn_song & sing_song are executed in series
+// 注意
+// - await函数必须在async函数中
+// - await函数本身也是block的，也就是await会block直到async函数执行完
+// - 如果不call await这个函数不会被执行
+// - await返回的是一个Future
+async fn learn_and_sing() {
+    // Wait until the song has been learned before singing it.
+    // We use `.await` here rather than `block_on` to prevent blocking the
+    // thread, which makes it possible to `dance` at the same time.
+    let song = learn_song().await;
+    sing_song(song).await;
+}
+
+// learn_and_sing & dance are executed in parallel
+// they won't be executed until join is called.
+// 如果要并行执行，需要用到join或者其他方法
+// join是个宏，可以支持多个异步函数
+async fn test_async_main() {
+    let f1 = learn_and_sing();
+    let f2 = dance();
+
+    // `join!` is like `.await` but can wait for multiple futures concurrently.
+    // If we're temporarily blocked in the `learn_and_sing` future, the `dance`
+    // future will take over the current thread. If `dance` becomes blocked,
+    // `learn_and_sing` can take back over. If both futures are blocked, then
+    // `async_main` is blocked and will yield to the executor.
+    futures::join!(f1, f2);
+}
+
+fn test_main() {
+    block_on(test_async_main());
 }
