@@ -6,9 +6,10 @@ use std::io::{Cursor, Write};
 // How to test?
 // "curl telnet://127.0.0.1:7979 <<< helo!"
 // "echo "foo" | nc 127.0.0.1 7979"
+// 
+// 修改版本 - 添加一个"[rec: ]"引起的问题
 // 遇到一个回车的问题 - 输入自动带一个停止字符
-// 当输出的时候，如果不自动带一个回车\n，client端不会接收到
-//
+// 当输出的时候，如果不自动带一个回车\n，client端不会输出
 
 // cast: usize as u64
 // ref: https://doc.rust-lang.org/rust-by-example/types/cast.html
@@ -35,12 +36,12 @@ pub async fn http_server() -> Result<(), Box<dyn std::error::Error>> {
                     }
                 };
 
-                // let n = n - 1;
+                let n = n - 1; // to remove the return character
                 println!("received: {}", String::from_utf8_lossy(&buf[..n]));
 
                 let mut cursor = Cursor::new(&mut buf[..]);
                 cursor.set_position(n as u64);
-                write!(cursor, "[rev: {}]\n", n).unwrap();
+                write!(cursor, "[rev: {}]\n", n).unwrap(); // add \n at the end
 
                 // Write the data back
                 let len = cursor.position() as usize;
