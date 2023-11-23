@@ -18,7 +18,7 @@ use async_std::{
 use futures::stream::StreamExt;
 
 /*
-pub async fn http_async_server() {
+pub async fn http_server() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     for stream in listener.incoming() {
         let stream = stream.unwrap();
@@ -28,7 +28,7 @@ pub async fn http_async_server() {
 }
 */
 
-pub async fn http_async_server() {
+pub async fn http_server() {
     let listener = TcpListener::bind("127.0.0.1:7878").await.unwrap();
     listener
         .incoming()
