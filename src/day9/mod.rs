@@ -16,7 +16,7 @@ pub fn http_server() {
         let stream = stream.unwrap();
 
         pool.execute(|| {
-            handle_connection(stream);
+            handle_connection(stream); // why not &mut?
         });
     }
 

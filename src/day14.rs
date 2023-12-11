@@ -17,8 +17,8 @@ pub fn concat_buf() {
     write!(cursor, "{}", helo).unwrap();
 
     cursor.set_position(2);
-    write!(cursor, "[time: {}]", 0).unwrap();
-
+    write!(cursor, "[time: {}]", timestamp).unwrap();
+    
     let len = cursor.position() as usize;
     println!("{}", std::str::from_utf8(&buf[..len]).unwrap());
 }
