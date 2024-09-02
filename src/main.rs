@@ -23,13 +23,12 @@ mod day15;
 // #[async_std::main]
 #[tokio::main]
 async fn main() {
-    println!("Hello, world!");
-
+    day1::run();
     // day6::guess_number();
     // day8::http_server_v1();
     // day9::http_server();
     // day12::http_server().await;
     // day13::tcp_server().await;
     // day14::concat_buf();
-    day15::udp_server().await;
+    // day15::udp_server().await;
 }
