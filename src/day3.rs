@@ -8,6 +8,7 @@ use rand::thread_rng;
 // shuffle这个方法是修改vec，而不是返回值因此无法使用chain
 // 最后的collect::<String>() 直接从Vec<char>的iter到String - collect的特殊用法
 // 一般的collect都是从iter到Vec
+// thread_rng 它提供了一个简单的方式来获取随机数，而不需要管理全局状态或担心线程安全问题。
 pub fn shuffle(str: &str) -> String {
     let mut rng = thread_rng();
     let mut string_to_shuffle: Vec<char> = str.chars().collect();

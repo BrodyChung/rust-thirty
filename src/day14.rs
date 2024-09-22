@@ -2,6 +2,7 @@
 use std::time::{SystemTime};
 use std::io::{Cursor, Write};
 
+// Cursor: 游标
 pub fn concat_buf() {
     let mut buf = [0; 1024];
 
@@ -9,10 +10,9 @@ pub fn concat_buf() {
         .duration_since(SystemTime::UNIX_EPOCH)
         .expect("Failed to get timestamp")
         .as_secs();
-        let time_buf = format!("[time: {}]", timestamp).as_bytes();
-
+    
+    let time_buf = format!("[time: {}]", timestamp).as_bytes();
     let helo = "helo";
-
     let mut cursor = Cursor::new(&mut buf[..]);
     write!(cursor, "{}", helo).unwrap();
 

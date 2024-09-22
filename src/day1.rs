@@ -1,6 +1,9 @@
 // ref: https://www.codewars.com/kata/5259b20d6021e9e14c0010d4/train/rust
 // split vs split_whitespace
 // vec & collect()
+
+// split_whitespace 会把多个空格当作一个来对待
+// 而split(" ")把每一个空格都当作一个来对待，这样里面会包含 ""的空字符
 pub fn reverse_words(str: &str) -> String {
     // let words: Vec<String> = str.split_whitespace()
     let words: Vec<String> = str.split(" ")
@@ -11,16 +14,11 @@ pub fn reverse_words(str: &str) -> String {
 }
 
 pub fn run() {
-    let words: &str = "Hello world";
+    let words: &str = "Hello  world";
     let ret: String = reverse_words(words);
     println!("{words}");
     println!("{ret}");
-
-    let mut ret2: String = reverse_words(words);
-    ret2.push_str("!");
-    println!("{ret2}");
-
-    //
+  
     let ret3 = first_word(words);
     println!("{ret3}");
 }

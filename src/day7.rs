@@ -13,6 +13,7 @@ impl Fibo {
 impl Iterator for Fibo {
     type Item = usize; // associate type, just like swift
 
+    // 不仅修改了self，而且需要返回当前的值
     fn next(&mut self) -> Option<Self::Item> {
         let tmp = self.next;
         self.next = self.curr + self.next;
@@ -21,7 +22,8 @@ impl Iterator for Fibo {
     }
 }
 
-pub fn gen_fib(n: usize) -> Vec<i32> {
+// 循环的方式生产fib数组，效率高
+fn gen_fib(n: usize) -> Vec<i32> {
     let mut fibo = vec![0, 1];
     for i in 2..n {
         let next = fibo[i-1] + fibo[i-2];
@@ -30,7 +32,9 @@ pub fn gen_fib(n: usize) -> Vec<i32> {
     fibo
 }
 
-pub fn recurv_fib(n: u32) -> u32 {
+
+// 递归的方式直接生成fib数列的第n项，效率比较低
+fn recurv_fib(n: u32) -> u32 {
     if n == 0 {
         return 0;
     } else if n == 1 {
@@ -58,11 +62,13 @@ mod tests {
         assert_eq!(fibo.next(), Some(8usize));
     }
 
+    // cargo test -- --nocapture 可以输出这行println!到标准输出
     #[test]
     fn test_fib_gen() {
         let fibo = gen_fib(7);
         let expect = vec![0, 1, 1, 2, 3, 5, 8];
         // use Vec::eq to compare.
+        println!("{:?}", fibo);
         assert!(fibo.eq(&expect));
     }
 
